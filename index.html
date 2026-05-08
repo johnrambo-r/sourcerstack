@@ -175,13 +175,27 @@ footer a{color:var(--accent);text-decoration:none;}
 ::-webkit-scrollbar-track{background:var(--bg);}
 ::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px;}
 
+/* DEMO */
+.demo-trigger{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-family:var(--font-mono);color:var(--muted);background:none;border:none;cursor:pointer;padding:0;margin-top:0.5rem;transition:color 0.15s;letter-spacing:0.03em;}
+.demo-trigger:hover{color:var(--accent);}
+.demo-trigger-icon{width:16px;height:16px;border-radius:50%;border:1px solid currentColor;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.demo-trigger-icon svg{width:6px;height:6px;fill:currentColor;margin-left:1px;}
+.demo-wrap{overflow:hidden;max-height:0;transition:max-height 0.35s ease,margin 0.35s ease;margin-bottom:0;}
+.demo-wrap.open{max-height:500px;margin-bottom:2.5rem;}
+.demo-thumb{display:block;position:relative;width:100%;margin-top:0.75rem;border-radius:4px;overflow:hidden;border:0.5px solid var(--border);text-decoration:none;}
+.demo-thumb img{width:100%;display:block;opacity:0.85;transition:opacity 0.2s;}
+.demo-thumb:hover img{opacity:1;}
+.demo-thumb-play{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:56px;height:56px;background:rgba(0,0,0,0.7);border-radius:50%;display:flex;align-items:center;justify-content:center;transition:background 0.2s;}
+.demo-thumb:hover .demo-thumb-play{background:rgba(255,0,0,0.85);}
+.demo-thumb-play svg{width:20px;height:20px;fill:#fff;margin-left:3px;}
+.demo-thumb-label{position:absolute;bottom:0;left:0;right:0;padding:0.5rem 0.75rem;font-size:10px;font-family:var(--font-mono);color:rgba(255,255,255,0.6);background:linear-gradient(transparent,rgba(0,0,0,0.6));letter-spacing:0.04em;}
+
 @media(max-width:640px){
   header,.search-section,.grid-container,.status-bar,.token-bar,.data-notice{padding-left:16px;padding-right:16px;}
   .dev-grid{grid-template-columns:1fr;}
   .drawer{width:100%;right:-100%;}
 }
 </style>
-<link rel="canonical" href="https://repute.sourcer.club/" />
 </head>
 <body class="dark">
 
@@ -193,6 +207,20 @@ footer a{color:var(--accent);text-decoration:none;}
     <svg class="icon-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
   </button>
 </header>
+
+<div class="search-section" style="padding-top:16px;padding-bottom:16px;">
+  <button class="demo-trigger" onclick="toggleDemo()">
+    <span class="demo-trigger-icon"><svg viewBox="0 0 10 10"><polygon points="2,1 9,5 2,9"/></svg></span>
+    <span id="demoTriggerLabel">Watch demo</span>
+  </button>
+  <div class="demo-wrap" id="demoWrap">
+    <a class="demo-thumb" href="https://www.youtube.com/watch?v=9Q64dadfQI0" target="_blank">
+      <img src="https://img.youtube.com/vi/9Q64dadfQI0/maxresdefault.jpg" alt="ReputeScoper demo" onerror="this.src='https://img.youtube.com/vi/9Q64dadfQI0/hqdefault.jpg'"/>
+      <div class="demo-thumb-play"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div>
+      <div class="demo-thumb-label">opens on YouTube · ~90 sec</div>
+    </a>
+  </div>
+</div>
 
 <div class="token-bar" id="tokenBar">
   <span id="tokenIcon">⚡</span>
@@ -499,6 +527,12 @@ function isIndianLocation(loc) {
 function initTheme() {
   var t = localStorage.getItem('ss_theme') || 'dark';
   if (t !== 'dark') { document.body.classList.remove('dark'); }
+}
+function toggleDemo(){
+  const wrap = document.getElementById('demoWrap');
+  const label = document.getElementById('demoTriggerLabel');
+  const isOpen = wrap.classList.toggle('open');
+  label.textContent = isOpen ? 'Hide demo' : 'Watch demo';
 }
 function toggleTheme() {
   var dark = document.body.classList.toggle('dark');
